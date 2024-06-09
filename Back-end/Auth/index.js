@@ -1,12 +1,21 @@
-const http = require("http");
-const app = require("./app");
-const server = http.createServer(app);
+// auth-service/index.js
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const authRoutes = require('./routes/auth');
+const config = require('./config/config');
 
+const app = express();
+app.use(bodyParser.json());
 
-const { API_PORT } = process.env;
-const port = process.env.PORT || API_PORT;
+mongoose.connect(config.mongoURI).then(() => {
+  console.log('Connected to MongoDB');
+}).catch(err => {
+  console.error('Failed to connect to MongoDB', err);
+});
 
-// server listening
-server.listen(port, () => {
-console.log(`Server running on port ${port}`);
+app.use('/auth', authRoutes);
+
+app.listen(config.port, () => {
+  console.log(`Auth service listening at http://localhost:${config.port}`);
 });
