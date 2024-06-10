@@ -8,13 +8,15 @@ const config = require('./config/config');
 const app = express();
 app.use(bodyParser.json());
 
-mongoose.connect(config.mongoURI).then(() => {
+mongoose.connect(config.mongoURI, {
+  useNewUrlParser: true,
+}).then(() => {
   console.log('Connected to MongoDB');
 }).catch(err => {
   console.error('Failed to connect to MongoDB', err);
 });
 
-app.use('/auth', authRoutes);
+app.use('/api', authRoutes);
 
 app.listen(config.port, () => {
   console.log(`Auth service listening at http://localhost:${config.port}`);

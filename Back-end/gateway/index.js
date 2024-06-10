@@ -10,7 +10,7 @@ app.use('/auth', createProxyMiddleware({
   target: config.authServiceUrl,
   changeOrigin: true,
   pathRewrite: {
-    '^/auth': '', // remove /auth prefix when forwarding to the auth service
+    '^/auth/': '', // remove /auth prefix when forwarding to the auth service
   },
 }));
 
