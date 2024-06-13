@@ -2,8 +2,14 @@
 const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const config = require('./config');
+const cors = require('cors');
 
 const app = express();
+
+
+app.use(cors()); // Use cors middleware
+// app.use(express.json());
+
 
 // Proxy configuration
 app.use('/auth', createProxyMiddleware({
